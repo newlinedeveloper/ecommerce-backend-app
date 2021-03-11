@@ -6,10 +6,16 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const cors = require("cors");
 const os = require("os");
+var fs = require('fs');
+
 
 const networkInterfaces = os.networkInterfaces();
-const ip = networkInterfaces.Ethernet[1].address;
-//config
+console.log(networkInterfaces["Wi-Fi"][1].address);
+const ip = networkInterfaces["Wi-Fi"][1].address;
+
+// const networkInterfaces = os.networkInterfaces();
+// const ip = networkInterfaces.Ethernet[1].address;
+// const ip = "http://127.0.0.1";
 require("dotenv/config");
 
 //import routes
@@ -31,7 +37,10 @@ mongoose.connect(
     useCreateIndex: true,
   },
   () => {
-    app.listen(process.env.PORT, ip);
+    app.listen(process.env.PORT, ip,()=>{
+      console.log("Server is running in "+ip+" Port : " +process.env.PORT );
+    });
+  
     let dirPath = path.join(
       __dirname,
       "public/api/static/images/productPictures"
@@ -71,7 +80,7 @@ app.get("/expo", (req, res) => {
   const id = req.query.userid;
   const token = req.query.token;
   console.log(id, token);
-  res.writeHead(301, {
+  res.json(301, {
     Location: `exp://${ip}:19000/--/ResetPw?userid=${id}&token=${token}`,
   });
   res.end();
