@@ -10,12 +10,12 @@ var fs = require('fs');
 
 
 const networkInterfaces = os.networkInterfaces();
-console.log(networkInterfaces["Wi-Fi"][1].address);
-const ip = networkInterfaces["Wi-Fi"][1].address;
+console.log(networkInterfaces);
+// const ip = networkInterfaces["Wi-Fi"][1].address;
 
 // const networkInterfaces = os.networkInterfaces();
 // const ip = networkInterfaces.Ethernet[1].address;
-// const ip = "http://127.0.0.1";
+const ip = "127.0.0.1";
 require("dotenv/config");
 
 //import routes
@@ -37,7 +37,7 @@ mongoose.connect(
     useCreateIndex: true,
   },
   () => {
-    app.listen(process.env.PORT, ip,()=>{
+    app.listen(process.env.PORT,()=>{
       console.log("Server is running in "+ip+" Port : " +process.env.PORT );
     });
   
